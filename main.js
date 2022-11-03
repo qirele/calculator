@@ -1,3 +1,33 @@
+const btns = document.querySelectorAll(".buttons button");
+const display = document.querySelector(".display");
+
+btns.forEach(btn => btn.addEventListener("click", takeAction));
+
+function takeAction(e) {
+  let action = e.target.textContent;
+  if (action === "=") {
+    return;
+  }
+  if (action === "CE") {
+    clear();
+    return;
+  }
+
+
+  if (display.textContent === "0") {
+    display.textContent = "";
+  }
+
+  display.textContent += e.target.textContent;
+}
+
+function clear() {
+  display.textContent = "0";
+}
+
+
+
+/*========== CORE CALCULATOR FUNCTIONS ============*/
 function add(x,y) {
   return x + y;
 }
@@ -33,3 +63,4 @@ function operate(operator, x,y) {
       return "ERROR";
   }
 }
+/*========== CORE CALCULATOR FUNCTIONS ============*/

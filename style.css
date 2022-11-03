@@ -43,7 +43,7 @@ body::before {
 
 
 .calculator {
-  max-width: 600px;
+  max-width: 350px;
   background-color: rgb(8, 20, 34);
   padding: 20px 30px;
 }
