@@ -1,7 +1,11 @@
 const btns = document.querySelectorAll(".buttons button");
-const display = document.querySelector(".display");
+const display = document.querySelector(".display-inner");
 
 btns.forEach(btn => btn.addEventListener("click", takeAction));
+
+let displayValue = "";
+let operator = "";
+let shouldClearNext = false;
 
 function takeAction(e) {
   let action = e.target.textContent;
@@ -9,20 +13,40 @@ function takeAction(e) {
     return;
   }
   if (action === "CE") {
+    displayValue = "";
+    operator = "";
     clear();
     return;
   }
 
+  if (e.target.className.includes("operator")) {
 
-  if (display.textContent === "0") {
-    display.textContent = "";
+    shouldClearNext = true;
+    if (displayValue !== "") {
+      displayValue = operate(operator, parseFloat(displayValue), parseInt(display.textContent))
+      display.textContent = displayValue;
+    } else {
+      displayValue = display.textContent;
+    }
+    operator = action;
+    return;
   }
 
-  display.textContent += e.target.textContent;
+
+  /**** WE CLICKED ON A NUMBER */
+  /**if last action was operator, we should clear displayText now */
+  if (shouldClearNext || display.textContent === "0") {
+    clear();
+  }
+
+  shouldClearNext = false;
+
+  display.textContent+= e.target.textContent;
 }
 
 function clear() {
-  display.textContent = "0";
+
+  display.textContent= "";
 }
 
 
