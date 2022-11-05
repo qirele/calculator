@@ -9,21 +9,37 @@ let shouldClearNext = false;
 
 function takeAction(e) {
   let action = e.target.textContent;
+
+  if (action === ".") {
+    // check if a dot already appears in value
+    if (!display.textContent.includes(".")) {
+      display.textContent += ".";
+    } 
+
+    return;
+  }
+
+
   if (action === "=") {
+    if (displayValue !== "" && operator !== "") {
+      displayValue = operate(operator, parseFloat(displayValue), parseFloat(display.textContent));
+      display.textContent  = displayValue;
+      operator = "";
+    }
     return;
   }
   if (action === "CE") {
     displayValue = "";
     operator = "";
-    clear();
+    display.textContent = "0";
     return;
   }
 
   if (e.target.className.includes("operator")) {
 
     shouldClearNext = true;
-    if (displayValue !== "") {
-      displayValue = operate(operator, parseFloat(displayValue), parseInt(display.textContent))
+    if (displayValue !== "" && operator !== "") {
+      displayValue = operate(operator, parseFloat(displayValue), parseFloat(display.textContent))
       display.textContent = displayValue;
     } else {
       displayValue = display.textContent;
@@ -36,17 +52,12 @@ function takeAction(e) {
   /**** WE CLICKED ON A NUMBER */
   /**if last action was operator, we should clear displayText now */
   if (shouldClearNext || display.textContent === "0") {
-    clear();
+    display.textContent = "";
   }
 
   shouldClearNext = false;
 
-  display.textContent+= e.target.textContent;
-}
-
-function clear() {
-
-  display.textContent= "";
+  display.textContent += e.target.textContent;
 }
 
 

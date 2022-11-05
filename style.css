@@ -55,6 +55,10 @@ body::before {
   gap: 2px;
 }
 
+.equal {
+  grid-column: 2 / span 2;
+}
+
 
 /* https://stackoverflow.com/questions/218065/overflow-to-left-instead-of-right */
 .display-outer {
