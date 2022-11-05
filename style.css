@@ -18,10 +18,10 @@ button {
   display: block; 
   border: none;
   background-color: rgb(3, 77, 80);
-  padding: 25px;
   color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
+  aspect-ratio: 1;
 }
 
 /*https://www.digitalocean.com/community/tutorials/how-to-change-a-css-background-images-opacity*/
@@ -43,20 +43,31 @@ body::before {
 
 
 .calculator {
-  max-width: 350px;
+  width: 330px;
   background-color: rgb(8, 20, 34);
-  padding: 20px 30px;
+  padding: 20px 10px;
   border-radius: 10px;
 }
 
 .buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 2px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
 }
 
 .equal {
-  grid-column: 2 / span 2;
+  grid-column: 3 / span 2;
+  grid-row: 5;
+  background-color: green;
+  aspect-ratio: 2;
+}
+
+.operator {
+  background-color: rgb(226, 106, 8);
+}
+
+.clear , .back{
+  background-color: rgb(255, 71, 71);
 }
 
 
