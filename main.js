@@ -32,6 +32,9 @@ function takeAction(e) {
   if (action === "=") {
     if (displayValue !== "" && operator !== "") {
       displayValue = operate( operator, parseFloat(displayValue), parseFloat(display.textContent) );
+      if (afterDotLen(displayValue) > 8) {
+        displayValue = displayValue.toFixed(8);
+      }
       display.textContent = displayValue;
       operator = "";
     }
@@ -42,6 +45,9 @@ function takeAction(e) {
     shouldClearNext = true;
     if (displayValue !== "" && operator !== "") {
       displayValue = operate( operator, parseFloat(displayValue), parseFloat(display.textContent) );
+      if (afterDotLen(displayValue) > 8) {
+        displayValue = displayValue.toFixed(8);
+      }
       display.textContent = displayValue;
     } else {
       displayValue = display.textContent;
@@ -84,6 +90,12 @@ function backspace() {
 
 }
 
+function afterDotLen(num) {
+  if (!num.toString().includes(".")) return;
+
+  return num.toString().split(".")[1].length || 0;
+}
+// 23653.600000000002
 
 /*========== CORE CALCULATOR FUNCTIONS ============*/
 function add(x, y) {
