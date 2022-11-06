@@ -1,18 +1,19 @@
 const btns = document.querySelectorAll(".buttons button");
 const display = document.querySelector(".display-inner");
 
-btns.forEach((btn) => btn.addEventListener("click", e => takeAction(e.target.textContent)));
-window.addEventListener("keyup", (e) => {
-  if (acceptedKeys.indexOf(e.key) !== -1) {
-    takeAction(e.key);
-  }
-});
-
 let acceptedKeys = "0123456789.-+/*=".split("");
 acceptedKeys.push("Backspace");
 let displayValue = "";
 let operator = "";
 let shouldClearNext = false;
+
+btns.forEach((btn) => btn.addEventListener("click", e => takeAction(e.target.textContent)));
+document.addEventListener("keydown", (e) => {
+  if (acceptedKeys.indexOf(e.key) !== -1) {
+    takeAction(e.key);
+  }
+});
+
 
 function takeAction(e) {
   if (e === "+/-") {
