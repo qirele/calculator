@@ -1,26 +1,32 @@
 const btns = document.querySelectorAll(".buttons button");
 const display = document.querySelector(".display-inner");
 
-btns.forEach((btn) => btn.addEventListener("click", takeAction));
+btns.forEach((btn) => btn.addEventListener("click", e => takeAction(e.target.textContent)));
+window.addEventListener("keyup", (e) => {
+    console.log(e.key)
+  if (acceptedKeys.indexOf(e.key) !== -1) {
+    takeAction(e.key);
+  }
+});
 
+let acceptedKeys = "0123456789.-+/*=".split("");
+acceptedKeys.push("Backspace");
 let displayValue = "";
 let operator = "";
 let shouldClearNext = false;
 
 function takeAction(e) {
-  let action = e.target.textContent;
-
-  if (action === "<") {
+  if (e === "<" || e === "Backspace") {
     backspace();
     return;
   }
 
-  if (display.textContent.includes("ERR") || action === "CE") {
+  if (display.textContent.includes("ERR") || e === "CE") {
     clear();
     return;
   }
 
-  if (action === ".") {
+  if (e === ".") {
     // check if a dot already appears in value
     if (!display.textContent.includes(".")) {
       display.textContent += ".";
@@ -29,7 +35,7 @@ function takeAction(e) {
     return;
   }
 
-  if (action === "=") {
+  if (e === "=") {
     if (displayValue !== "" && operator !== "") {
       displayValue = operate( operator, parseFloat(displayValue), parseFloat(display.textContent) );
       if (afterDotLen(displayValue) > 8) {
@@ -41,7 +47,7 @@ function takeAction(e) {
     return;
   }
 
-  if (e.target.className.includes("operator")) {
+  if (e === "*" || e === "/" || e === "-"|| e === "+" ) { 
     shouldClearNext = true;
     if (displayValue !== "" && operator !== "") {
       displayValue = operate( operator, parseFloat(displayValue), parseFloat(display.textContent) );
@@ -52,7 +58,7 @@ function takeAction(e) {
     } else {
       displayValue = display.textContent;
     }
-    operator = action;
+    operator = e;
     return;
   }
 
@@ -64,7 +70,7 @@ function takeAction(e) {
 
   shouldClearNext = false;
 
-  display.textContent += e.target.textContent;
+  display.textContent += e;
 }
 
 function clear() {
@@ -95,7 +101,6 @@ function afterDotLen(num) {
 
   return num.toString().split(".")[1].length || 0;
 }
-// 23653.600000000002
 
 /*========== CORE CALCULATOR FUNCTIONS ============*/
 function add(x, y) {
