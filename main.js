@@ -9,6 +9,8 @@ let shouldClearNext = false;
 
 btns.forEach((btn) => btn.addEventListener("click", e => takeAction(e.target.textContent)));
 document.addEventListener("keydown", (e) => {
+  e.preventDefault();
+  if (e.key === "F5") window.location.reload();
   if (acceptedKeys.indexOf(e.key) !== -1) {
     takeAction(e.key);
   }
