@@ -3,7 +3,6 @@ const display = document.querySelector(".display-inner");
 
 btns.forEach((btn) => btn.addEventListener("click", e => takeAction(e.target.textContent)));
 window.addEventListener("keyup", (e) => {
-    console.log(e.key)
   if (acceptedKeys.indexOf(e.key) !== -1) {
     takeAction(e.key);
   }
@@ -16,6 +15,18 @@ let operator = "";
 let shouldClearNext = false;
 
 function takeAction(e) {
+  if (e === "+/-") {
+    let out;
+    if (display.textContent.includes("-")) {
+      out = display.textContent.slice(1);
+    } else {
+      out = `-${display.textContent}`;
+    }
+
+    display.textContent = out;
+    return;
+  }
+
   if (e === "<" || e === "Backspace") {
     backspace();
     return;
@@ -27,7 +38,7 @@ function takeAction(e) {
   }
 
   if (e === ".") {
-    // check if a dot already appears in value
+    // make sure dot doesn't appear twice 
     if (!display.textContent.includes(".")) {
       display.textContent += ".";
     }
