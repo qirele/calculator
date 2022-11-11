@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 20px;
   font-family: monospace;
 }
 
@@ -12,6 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
+  font-size: 23px;
 }
 
 button {
@@ -22,6 +22,8 @@ button {
   border-radius: 5px;
   cursor: pointer;
   aspect-ratio: 1;
+  transition: all .3s;
+  font-size: 20px;
 }
 
 /*https://www.digitalocean.com/community/tutorials/how-to-change-a-css-background-images-opacity*/
@@ -44,9 +46,10 @@ body::before {
 
 .calculator {
   width: 330px;
-  background-color: rgb(8, 20, 34);
-  padding: 20px 10px;
+  background-color: white; 
+  padding: 20px 25px;
   border-radius: 10px;
+  outline: 2px solid black;
 }
 
 .buttons {
@@ -71,6 +74,12 @@ body::before {
 }
 
 
+button:hover {
+  transform: translate(3px, -3px);
+  box-shadow: -3px 3px black;
+}
+
+
 /* https://stackoverflow.com/questions/218065/overflow-to-left-instead-of-right */
 .display-outer {
   width:100%;
@@ -79,9 +88,12 @@ body::before {
   text-align:right;
   overflow:hidden;
   white-space: nowrap;
+  background-color: black;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .display-inner {
   float: right;
-  padding: 5px 0px 20px;
+  padding: 15px 5px 15px;
 }
