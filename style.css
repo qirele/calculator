@@ -74,7 +74,7 @@ body::before {
 }
 
 
-button:hover {
+button:hover, button.active {
   transform: translate(3px, -3px);
   box-shadow: -3px 3px black;
 }

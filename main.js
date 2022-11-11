@@ -7,7 +7,9 @@ let displayValue = "";
 let operator = "";
 let shouldClearNext = false;
 
-btns.forEach((btn) => btn.addEventListener("click", e => takeAction(e.target.textContent)));
+btns.forEach((btn) =>
+  btn.addEventListener("click", (e) => takeAction(e.target.textContent))
+);
 document.addEventListener("keydown", (e) => {
   e.preventDefault();
   if (e.key === "F5") window.location.reload();
@@ -16,17 +18,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-
 function takeAction(e) {
   if (e === "+/-") {
-    let out;
-    if (display.textContent.includes("-")) {
-      out = display.textContent.slice(1);
-    } else {
-      out = `-${display.textContent}`;
-    }
-
-    display.textContent = out;
+    addMinusOrPlus();
     return;
   }
 
@@ -41,7 +35,7 @@ function takeAction(e) {
   }
 
   if (e === ".") {
-    // make sure dot doesn't appear twice 
+    // make sure dot doesn't appear twice
     if (!display.textContent.includes(".")) {
       display.textContent += ".";
     }
@@ -50,29 +44,12 @@ function takeAction(e) {
   }
 
   if (e === "=") {
-    if (displayValue !== "" && operator !== "") {
-      displayValue = operate( operator, parseFloat(displayValue), parseFloat(display.textContent) );
-      if (afterDotLen(displayValue) > 8) {
-        displayValue = displayValue.toFixed(8);
-      }
-      display.textContent = displayValue;
-      operator = "";
-    }
+    evaluate();
     return;
   }
 
-  if (e === "*" || e === "/" || e === "-"|| e === "+" ) { 
-    shouldClearNext = true;
-    if (displayValue !== "" && operator !== "") {
-      displayValue = operate( operator, parseFloat(displayValue), parseFloat(display.textContent) );
-      if (afterDotLen(displayValue) > 8) {
-        displayValue = displayValue.toFixed(8);
-      }
-      display.textContent = displayValue;
-    } else {
-      displayValue = display.textContent;
-    }
-    operator = e;
+  if (e === "*" || e === "/" || e === "-" || e === "+") {
+    performOperation(e);
     return;
   }
 
@@ -85,6 +62,50 @@ function takeAction(e) {
   shouldClearNext = false;
 
   display.textContent += e;
+}
+
+function addMinusOrPlus() {
+  let out;
+  if (display.textContent.includes("-")) {
+    out = display.textContent.slice(1);
+  } else {
+    out = `-${display.textContent}`;
+  }
+
+  display.textContent = out;
+}
+
+function evaluate() {
+  if (displayValue !== "" && operator !== "") {
+    displayValue = operate(
+      operator,
+      parseFloat(displayValue),
+      parseFloat(display.textContent)
+    );
+    if (afterDotLen(displayValue) > 8) {
+      displayValue = displayValue.toFixed(8);
+    }
+    display.textContent = displayValue;
+    operator = "";
+  }
+}
+
+function performOperation(operation) {
+  shouldClearNext = true;
+  if (displayValue !== "" && operator !== "") {
+    displayValue = operate(
+      operator,
+      parseFloat(displayValue),
+      parseFloat(display.textContent)
+    );
+    if (afterDotLen(displayValue) > 8) {
+      displayValue = displayValue.toFixed(8);
+    }
+    display.textContent = displayValue;
+  } else {
+    displayValue = display.textContent;
+  }
+  operator = operation;
 }
 
 function clear() {
@@ -105,9 +126,6 @@ function backspace() {
   }
 
   display.textContent = output;
-
-
-
 }
 
 function afterDotLen(num) {
