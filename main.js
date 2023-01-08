@@ -21,8 +21,15 @@ document.addEventListener("keydown", (e) => {
 
 function takeAction(e) {
 
-  if (history.textContent.includes("=")) history.textContent = displayValue; 
-  history.textContent += e;
+  //=========== this prints history of actions correctly  (could be written better)
+  if (history.textContent.includes("=")) {
+    history.textContent = displayValue === 0 ? "" : displayValue;
+  }
+  if (history.textContent.includes("ERR")) {
+    history.innerHTML = "&nbsp;";
+  } else {
+    history.textContent += e;
+  }
 
   if (e === "+/-") {
     addMinusOrPlus();
