@@ -1,5 +1,6 @@
 const btns = document.querySelectorAll(".buttons button");
-const display = document.querySelector(".display-inner");
+const display = document.querySelector("#active");
+const history = document.querySelector("#history");
 
 let acceptedKeys = "0123456789.-+/*=".split("");
 acceptedKeys.push("Backspace");
@@ -11,14 +12,18 @@ btns.forEach((btn) =>
   btn.addEventListener("click", (e) => takeAction(e.target.textContent))
 );
 document.addEventListener("keydown", (e) => {
+  if (e.key === "F12" || e.key === "F5") return;
   e.preventDefault();
-  if (e.key === "F5") window.location.reload();
   if (acceptedKeys.indexOf(e.key) !== -1) {
     takeAction(e.key);
   }
 });
 
 function takeAction(e) {
+
+  if (history.textContent.includes("=")) history.textContent = displayValue; 
+  history.textContent += e;
+
   if (e === "+/-") {
     addMinusOrPlus();
     return;
@@ -45,6 +50,7 @@ function takeAction(e) {
 
   if (e === "=") {
     evaluate();
+    history.textContent += displayValue;
     return;
   }
 
